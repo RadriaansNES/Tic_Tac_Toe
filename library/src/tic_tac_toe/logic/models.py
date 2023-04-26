@@ -25,7 +25,7 @@ class Mark(enum.StrEnum):
 
     @property
     def other(self) -> "Mark":
-        return Mark.cross if self is Mark.circle else Mark.cross
+        return Mark.cross if self is Mark.circle else Mark.circle
     
 @dataclass(frozen=True)
 class Grid:
