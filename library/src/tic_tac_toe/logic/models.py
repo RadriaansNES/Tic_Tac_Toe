@@ -2,10 +2,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import cached_property
 from tic_tac_toe.logic.validators import validate_game_state, validate_grid
-from tic_tac_toe.logic.exceptions import InvalidMove
+from tic_tac_toe.logic.exceptions import InvalidMove, UnknownGameScore
 
 import re
 import enum
+import random
 
 
 WINNING_PATTERNS = (
@@ -103,11 +104,18 @@ class gamestate:
                 moves.append(self.make_move_to(match.start()))
         return moves
     
-    def make_move_to(self, index: int) -> Move:
-        if self.grid.cells[index] != " ":
-            raise InvalidMove("Cell is not empty")
-        return Move(
-            mark=self.current_mark,
-            cell_index=index,
-            before_state=self,
-            after_state=gamestate(Grid(self.grid.cells[:index] + self.current_mark + self.grid.cells[index + 1:]), self.starting_mark))
+    def make_random_move(self) -> Move | None:
+        try:
+            return random.choice(self.possible_moves)
+        except IndexError:
+            return None
+    
+    def evaluate_score(self, mark: Mark) -> int:
+        if self.game_over:
+            if self.tie:
+                return 0
+            if self.winner is mark:
+                return 1
+            else:
+                return -1
+        raise UnknownGameScore("Game is not over yet")

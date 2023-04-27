@@ -1,8 +1,8 @@
 import abc
 import time
-import random
 from tic_tac_toe.logic.exceptions import InvalidMove
 from tic_tac_toe.logic.models import gamestate, Mark, Move
+from tic_tac_toe.logic.minimax import find_best_mov
 
 class Player(metaclass=abc.ABCMeta):
     def __init__(self, mark: Mark) -> None:
@@ -35,7 +35,11 @@ class ComputerPlayer(Player, metaclass=abc.ABCMeta):
 
 class RandomComputerPlayer(ComputerPlayer):
     def get_computer_move(self, game_state: gamestate) -> Move | None:
-        try:
-            return random.choice(game_state.possible_moves)
-        except IndexError:
-            return None
+            return game_state.make_random_move()
+    
+class MinimaxComputerPlayer(ComputerPlayer):
+    def get_computer_move(self, game_state: gamestate) -> Move | None:
+        if game_state.game_not_started:
+            return game_state.make_random_move()
+        else:
+            return find_best_move(game_state)

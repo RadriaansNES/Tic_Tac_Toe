@@ -7,6 +7,7 @@ from typing import NamedTuple
 PLAYER_CLASSES = {
     "human": ConsolePlayer,
     "random": RandomComputerPlayer,
+    "minimax": MinimaxComputerPlayer,
 }
 
 class Args(NamedTuple):
@@ -26,7 +27,7 @@ def parse_args() -> Args:
         "-O",
         dest="player_o",
         choices=PLAYER_CLASSES.keys(),
-        default="random",
+        default="minimax",
     )
     parser.add_argument(
         "--starting",
@@ -44,3 +45,9 @@ def parse_args() -> Args:
         player1, player2 = player2, player1
 
     return Args(player1, player2, args.starting_mark)
+
+from tic_tac_toe.game.players import (
+    Player,
+    RandomComputerPlayer,
+    MinimaxComputerPlayer,
+)
