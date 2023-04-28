@@ -10,5 +10,6 @@ src/tic_tac_toe/game/players.py
 src/tic_tac_toe/game/renderers.py
 src/tic_tac_toe/logic/__init__.py
 src/tic_tac_toe/logic/exceptions.py
+src/tic_tac_toe/logic/minimax.py
 src/tic_tac_toe/logic/models.py
 src/tic_tac_toe/logic/validators.py

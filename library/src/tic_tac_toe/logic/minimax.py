@@ -1,10 +1,13 @@
-from tic_tac_toe.logic.models import Mark, Move, gamestate
 from functools import partial
 
-def find_best_move(game_state: gamestate) -> Move | None:
+from tic_tac_toe.logic.models import GameState, Mark, Move
+
+
+def find_best_move(game_state: GameState) -> Move | None:
     maximizer: Mark = game_state.current_mark
     bound_minimax = partial(minimax, maximizer=maximizer)
     return max(game_state.possible_moves, key=bound_minimax)
+
 
 def minimax(
     move: Move, maximizer: Mark, choose_highest_score: bool = False

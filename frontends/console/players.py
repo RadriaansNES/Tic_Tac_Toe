@@ -1,10 +1,12 @@
-from tic_tac_toe.game.players import Player
-from tic_tac_toe.logic.exceptions import InvalidMove
-from tic_tac_toe.logic.models import gamestate, Move
 import re
 
+from tic_tac_toe.game.players import Player
+from tic_tac_toe.logic.exceptions import InvalidMove
+from tic_tac_toe.logic.models import GameState, Move
+
+
 class ConsolePlayer(Player):
-    def get_move(self, game_state: gamestate) -> Move | None:
+    def get_move(self, game_state: GameState) -> Move | None:
         while not game_state.game_over:
             try:
                 index = grid_to_index(input(f"{self.mark}'s move: ").strip())
@@ -16,7 +18,8 @@ class ConsolePlayer(Player):
                 except InvalidMove:
                     print("That cell is already occupied.")
         return None
-    
+
+
 def grid_to_index(grid: str) -> int:
     if re.match(r"[abcABC][123]", grid):
         col, row = grid

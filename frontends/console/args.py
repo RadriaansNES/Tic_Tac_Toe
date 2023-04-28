@@ -1,8 +1,14 @@
 import argparse
-from tic_tac_toe.game.players import RandomComputerPlayer, Player, MinimaxComputerPlayer
-from .players import ConsolePlayer
-from tic_tac_toe.logic.models import Mark
 from typing import NamedTuple
+
+from tic_tac_toe.game.players import (
+    Player,
+    RandomComputerPlayer,
+    MinimaxComputerPlayer,
+)
+from tic_tac_toe.logic.models import Mark
+
+from .players import ConsolePlayer
 
 PLAYER_CLASSES = {
     "human": ConsolePlayer,
@@ -10,10 +16,12 @@ PLAYER_CLASSES = {
     "minimax": MinimaxComputerPlayer,
 }
 
+
 class Args(NamedTuple):
     player1: Player
     player2: Player
     starting_mark: Mark
+
 
 def parse_args() -> Args:
     parser = argparse.ArgumentParser()
@@ -45,9 +53,3 @@ def parse_args() -> Args:
         player1, player2 = player2, player1
 
     return Args(player1, player2, args.starting_mark)
-
-from tic_tac_toe.game.players import (
-    Player,
-    RandomComputerPlayer,
-    MinimaxComputerPlayer,
-)
